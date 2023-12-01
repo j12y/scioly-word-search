@@ -1,0 +1,46 @@
+
+let grid = [];
+for(let i = 0; i < 4; i++) {
+    let row = [];
+    for(let j = 0; j < 4; j++) {
+        row.push(String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+    }
+    grid.push(row);
+}
+
+// Insert words into the grid
+for (let word of words) {
+    let row = Math.floor(Math.random() * 4);
+    let col = Math.floor(Math.random() * 4);
+    let direction = Math.floor(Math.random() * 8);
+
+    let wordArr = word.split('');
+    let isValid = true;
+
+    for (let letter of wordArr) {
+        if (row < 0 || row >= 4 || col < 0 || col >= 4 || grid[row][col] !== '') {
+            isValid = false;
+            break;
+        }
+
+        row += direction === 0 || direction === 1 || direction === 7 ? -1 : 0;
+        row += direction === 3 || direction === 4 || direction === 5 ? 1 : 0;
+        col += direction === 1 || direction === 2 || direction === 3 ? 1 : 0;
+        col += direction === 5 || direction === 6 || direction === 7 ? -1 : 0;
+    }
+
+    if (isValid) {
+        row = Math.floor(Math.random() * 4);
+        col = Math.floor(Math.random() * 4);
+
+        for (let letter of wordArr) {
+            grid[row][col] = letter;
+
+            row += direction === 0 || direction === 1 || direction === 7 ? -1 : 0;
+            row += direction === 3 || direction === 4 || direction === 5 ? 1 : 0;
+            col += direction === 1 || direction === 2 || direction === 3 ? 1 : 0;
+            col += direction === 5 || direction === 6 || direction === 7 ? -1 : 0;
+        }
+    }
+}
+
